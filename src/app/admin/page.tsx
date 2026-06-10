@@ -129,22 +129,22 @@ export default function AdminDashboard() {
   }
 
   async function sendReply() {
-    if (!replyText.trim() || !selectedCustomer) return;
-    setSendingReply(true);
-    await supabase.from("conversations").insert({
-      session_id: selectedCustomer.phone,
-      from_number: selectedCustomer.phone,
-      profile_name: selectedCustomer.name,
-      user_message: null,
-      bot_message: replyText.trim(),
-      channel: "dashboard",
-      escalated: false,
-      timestamp: new Date().toISOString(),
-    });
-    setReplyText("");
-    await loadMessages(selectedCustomer.phone);
-    setSendingReply(false);
-  }
+  if (!replyText.trim() || !selectedCustomer) return;
+  setSendingReply(true);
+  await supabase.from("conversations").insert({
+    session_id: selectedCustomer.phone,
+    from_number: selectedCustomer.phone,
+    profile_name: selectedCustomer.name,
+    user_message: null,
+    bot_message: replyText.trim(),
+    channel: "dashboard",
+    escalated: false,
+    timestamp: new Date().toISOString(),
+  });
+  setReplyText("");
+  await loadMessages(selectedCustomer.phone);
+  setSendingReply(false);
+}
 
   async function logout() {
     await supabase.auth.signOut();
